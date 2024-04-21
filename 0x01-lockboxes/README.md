@@ -40,6 +40,5 @@ Understanding how to use sets for keeping track of visited boxes and available k
 <li>Python Sets (Python Official Documentation)
 </li>
 </ul></li>
-<li>
 </ol>
 <p>By reviewing these concepts and utilizing these resources, you will be well-equipped to develop an efficient solution for this project, applying both your algorithmic thinking and Python programming skills.</p>
