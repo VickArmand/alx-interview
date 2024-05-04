@@ -34,16 +34,20 @@ if __name__ == "__main__":
     """
     fileSize = 0
     numLines = 0
+    IPpattern = "[0-9]{2,3}\.[0-9]{2,3}\.[0-9]{2,3}\.[0-9]{2,3}"
+    DatePattern = "\[[0-9]{4}-[0-9]{2}-[0-9]{2}"
+    TimePattern = "[0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{6}\]"
+    UrlPattern = '"GET /[a-z]+/[0-9]+ HTTP/[0-9]\.[0-9]" [0-9]{3} [0-9]+'
     statusOccurence = {
         200: 0, 301: 0, 400: 0,
         401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
     try:
         for line in sys.stdin:
             numLines += 1
-            IPpattern = '[0-9]{2,3}\.[0-9]{2,3}\.[0-9]{2,3}\.[0-9]{2,3}'
-            DatePattern = '\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{6}\]'
-            UrlPattern = '"GET /[a-z]+/[0-9]+ HTTP/[0-9]\.[0-9]" [0-9]{3} [0-9]+'
-            pattern = '{} - {} {}'.format(IPpattern, DatePattern, UrlPattern)
+            pattern = '{} - {} {} {}'.format(IPpattern,
+                                             DatePattern,
+                                             TimePattern,
+                                             UrlPattern)
             p = re.search(pattern, line)
             if p is None:
                 continue
@@ -53,5 +57,7 @@ if __name__ == "__main__":
             if numLines == 10:
                 show_status_log(fileSize, statusOccurence)
                 numLines = 0
-    except KeyboardInterrupt:
+    except Exception as err:
+        pass
+    finally:
         show_status_log(fileSize, statusOccurence)
