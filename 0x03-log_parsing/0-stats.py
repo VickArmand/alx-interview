@@ -8,10 +8,12 @@ import re
 
 
 def show_status_log(fileSize, statusOccurence):
-    """"""
+    """Prints the status log"""
     print('File size: {}'.format(fileSize))
-    for k,v in statusOccurence.items():
-        print('{}: {}'.format(k, v))
+    for k, v in statusOccurence.items():
+        if v > 0:
+            print('{}: {}'.format(k, v))
+
 
 if __name__ == "__main__":
     """
@@ -32,7 +34,9 @@ if __name__ == "__main__":
     """
     fileSize = 0
     numLines = 0
-    statusOccurence = { 200: 0, 301: 0, 400: 0, 401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
+    statusOccurence = {
+        200: 0, 301: 0, 400: 0,
+        401: 0, 403: 0, 404: 0, 405: 0, 500: 0}
     try:
         for line in sys.stdin:
             numLines += 1
@@ -40,8 +44,8 @@ if __name__ == "__main__":
             DatePattern = '\[[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}\.[0-9]{6}\]'
             UrlPattern = '"GET /[a-z]+/[0-9]+ HTTP/[0-9]\.[0-9]" [0-9]{3} [0-9]+'
             pattern = '{} - {} {}'.format(IPpattern, DatePattern, UrlPattern)
-            p = re.search(pattern,line)
-            if p == None:
+            p = re.search(pattern, line)
+            if p is None:
                 continue
             wordList = line.split()
             fileSize += int(wordList[8])
