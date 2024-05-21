@@ -34,30 +34,28 @@ def is_valid_list(positions):
     accordance with the right standards
     """
     for position in positions:
-        is_valid= check_attackable(position[0], position[1], positions)
+        is_valid = check_attackable(position[0], position[1], positions)
         if not is_valid:
             return False
     return True
+
 
 def backtrack(previous_positions, n):
     new_positions = []
     for position in previous_positions:
         previous_positions_copy = previous_positions.copy()
         previous_positions_copy.remove(position)
-        i = position[0]
-        for j in range(n):
-            attackable = check_attackable(i, j, previous_positions_copy)
-            if not attackable and [i, j] not in previous_positions:
-                new_positions.append([i, j])
-        print(new_positions)
-        print(previous_positions_copy)
-        # new_positions.clear()
+        for i in range(n):
+            for j in range(n):
+                attackable = check_attackable(i, j, new_positions)
+                if not attackable and [i, j] != position:
+                    new_positions.append([i, j])
     is_valid = is_valid_list(new_positions)
-    # print("original", is_valid, new_positions)
     if len(new_positions) == n and is_valid:
         return new_positions
     else:
         backtrack(new_positions, n)
+
 
 def nqueens(n):
     """
@@ -93,11 +91,10 @@ if __name__ == '__main__':
     except ValueError:
         print('N must be a number')
         sys.exit(1)
+    possible_solutions = []
     for times in range(n):
         q = nqueens(n)
-        print('[', end="")
-        for i in range(len(q)):
-            if i > 0 and (i + 1) % n == 0:
-                print(f'{q[i]}]')
-            else:
-                print(q[i], end="")
+        if q not in possible_solutions:
+            possible_solutions.append(q)
+    for pos in possible_solutions:
+        print(pos)
