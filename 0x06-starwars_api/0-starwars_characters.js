@@ -10,26 +10,20 @@
  */
 const req = require('request');
 const filmsUrl = 'https://swapi-api.alx-tools.com/api/films/';
-const peopleUrl = 'https://swapi-api.alx-tools.com/api/people/';
-function sortUrlArray (urlArray) {
-  for (const index in urlArray) {
-    urlArray[index] = urlArray[index].replace(peopleUrl, '').replace('/', '');
-    urlArray[index] = Number(urlArray[index]);
-  }
-  return urlArray.sort((a, b) => a - b);
-}
 req(filmsUrl + process.argv[2], (error, response, body) => {
   if (error) console.log(error);
   else {
-    const filmCharacters = sortUrlArray(JSON.parse(body).characters);
-    for (const index in filmCharacters) {
-      req(peopleUrl + filmCharacters[index], (error, response, body) => {
-        if (error) console.log(error);
-        else {
-          const characters = JSON.parse(body);
-          console.log(characters.name);
-        }
-      });
-    }
+    const characters = JSON.parse(body).characters;
+    printCharacters(characters, 0);
   }
 });
+function printCharacters (characters, index) {
+  req(characters[index], function (error, response, body) {
+    if (!error) {
+      console.log(JSON.parse(body).name);
+      if (index + 1 < characters.length) {
+        printCharacters(characters, index + 1);
+      }
+    }
+  });
+}
