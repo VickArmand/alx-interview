@@ -21,9 +21,9 @@ def makeChange(coins, total):
         return -1
     total -= sum(coins)
     min_coins = len(coins)
-    while total > 0 and len(coins) > 0:
+    while total > 0:
         max_denomination = max(coins)
-        if total - max_denomination > 0:
+        if total >= max_denomination:
             total -= max_denomination
             min_coins += 1
         else:
