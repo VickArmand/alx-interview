@@ -17,7 +17,7 @@ def makeChange(coins, total):
     """
     if total <= 0:
         return 0
-    if sum(coins) > total:
+    if sum(coins) > total or len(coins) == 0:
         return -1
     min_coins = 0
     while total > 0:
