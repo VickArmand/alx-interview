@@ -75,12 +75,11 @@ def island_perimeter(grid):
     The island doesn’t have “lakes”
     (water inside that isn’t connected to the water surrounding the island).
     """
-    perimeter = 0
+    grid_perimeter = 0
     size = len(grid)
     for i in range(size):
         for j in range(size):
             if grid[i][j] == 1:
-                val = perimeter_cell(grid, i, j)
-                print(val, i, j)
-                perimeter += val
-    return perimeter
+                cell_perimeter = perimeter_cell(grid, i, j)
+                grid_perimeter += cell_perimeter
+    return grid_perimeter
