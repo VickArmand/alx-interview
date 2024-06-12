@@ -6,12 +6,45 @@ def perimeter_cell(grid, i, j):
     """Determines the perimeter of one cell"""
     size = len(grid)
     perimeter = 4
-    if j == 0 or i == 0:
+    if j == 0 and i != 0:
         if grid[i + 1][j] == 1:
             perimeter -= 1
         if grid[i][j + 1] == 1:
             perimeter -= 1
-    elif i == size - 1 or j == size - 1:
+        if grid[i - 1][j] == 1:
+            perimeter -= 1
+    elif i == 0 and j != 0:
+        if grid[i + 1][j] == 1:
+            perimeter -= 1
+        if grid[i][j + 1] == 1:
+            perimeter -= 1
+        if grid[i][j - 1] == 1:
+            perimeter -= 1
+    elif i == 0 and j == 0:
+        if grid[i + 1][j] == 1:
+            perimeter -= 1
+        if grid[i][j + 1] == 1:
+            perimeter -= 1
+    elif i == 0 and j == 0:
+        if grid[i + 1][j] == 1:
+            perimeter -= 1
+        if grid[i][j + 1] == 1:
+            perimeter -= 1
+    elif i == size - 1 and j != size - 1:
+        if grid[i - 1][j] == 1:
+            perimeter -= 1
+        if grid[i][j - 1] == 1:
+            perimeter -= 1
+        if grid[i][j + 1] == 1:
+            perimeter -= 1
+    elif j == size - 1 and i != size - 1:
+        if grid[i - 1][j] == 1:
+            perimeter -= 1
+        if grid[i][j - 1] == 1:
+            perimeter -= 1
+        if grid[i + 1][j] == 1:
+            perimeter -= 1
+    elif j == size - 1 and i == size - 1:
         if grid[i - 1][j] == 1:
             perimeter -= 1
         if grid[i][j - 1] == 1:
@@ -46,9 +79,8 @@ def island_perimeter(grid):
     size = len(grid)
     for i in range(size):
         for j in range(size):
-            if grid[i][j] == 0:
-                perimeter += 0
-            else:
+            if grid[i][j] == 1:
                 val = perimeter_cell(grid, i, j)
+                print(val, i, j)
                 perimeter += val
     return perimeter
