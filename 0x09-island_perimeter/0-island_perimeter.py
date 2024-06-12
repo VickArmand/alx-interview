@@ -50,6 +50,5 @@ def island_perimeter(grid):
                 perimeter += 0
             else:
                 val = perimeter_cell(grid, i, j)
-                print(val, i, j)
                 perimeter += val
     return perimeter
