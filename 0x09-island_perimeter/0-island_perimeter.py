@@ -25,11 +25,6 @@ def perimeter_cell(grid, i, j):
             perimeter -= 1
         if grid[i][j + 1] == 1:
             perimeter -= 1
-    elif i == 0 and j == 0:
-        if grid[i + 1][j] == 1:
-            perimeter -= 1
-        if grid[i][j + 1] == 1:
-            perimeter -= 1
     elif i == size - 1 and j != size - 1:
         if grid[i - 1][j] == 1:
             perimeter -= 1
