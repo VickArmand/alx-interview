@@ -7,12 +7,7 @@ def perimeter_cell(grid, i, j):
     rows = len(grid)
     columns = len(grid[i])
     perimeter = 4
-    if i == 0 and j == 0:
-        if grid[i + 1][j] == 1:
-            perimeter -= 1
-        if grid[i][j + 1] == 1:
-            perimeter -= 1
-    elif i == rows - 1 and j != columns - 1:
+    if i == rows - 1 and j != columns - 1:
         if grid[i - 1][j] == 1:
             perimeter -= 1
         if j != 0 and grid[i][j - 1] == 1:
@@ -26,33 +21,14 @@ def perimeter_cell(grid, i, j):
             perimeter -= 1
         if grid[i + 1][j] == 1:
             perimeter -= 1
-    elif j == 0 and i != 0:
-        if grid[i + 1][j] == 1:
-            perimeter -= 1
-        if grid[i][j + 1] == 1:
-            perimeter -= 1
-        if grid[i - 1][j] == 1:
-            perimeter -= 1
-    elif i == 0 and j != 0:
-        if grid[i + 1][j] == 1:
-            perimeter -= 1
-        if grid[i][j + 1] == 1:
-            perimeter -= 1
-        if grid[i][j - 1] == 1:
-            perimeter -= 1
-    elif j == columns - 1 and i == rows - 1:
-        if grid[i - 1][j] == 1:
-            perimeter -= 1
-        if grid[i][j - 1] == 1:
-            perimeter -= 1
     else:
-        if grid[i + 1][j] == 1:
+        if i != rows - 1 and grid[i + 1][j] == 1:
             perimeter -= 1
-        if grid[i - 1][j] == 1:
+        if i != 0 and grid[i - 1][j] == 1:
             perimeter -= 1
-        if grid[i][j + 1] == 1:
+        if j != columns - 1 and grid[i][j + 1] == 1:
             perimeter -= 1
-        if grid[i][j - 1] == 1:
+        if j != 0 and grid[i][j - 1] == 1:
             perimeter -= 1
     return perimeter
 
