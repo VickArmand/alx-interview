@@ -15,12 +15,12 @@ def perimeter_cell(grid, i, j):
     elif i == rows - 1 and j != columns - 1:
         if grid[i - 1][j] == 1:
             perimeter -= 1
-        if grid[i][j - 1] == 1:
+        if j != 0 and grid[i][j - 1] == 1:
             perimeter -= 1
         if grid[i][j + 1] == 1:
             perimeter -= 1
     elif j == columns - 1 and i != rows - 1:
-        if grid[i - 1][j] == 1:
+        if i != 0 and grid[i - 1][j] == 1:
             perimeter -= 1
         if grid[i][j - 1] == 1:
             perimeter -= 1
@@ -78,5 +78,6 @@ def island_perimeter(grid):
         for j in range(columns):
             if grid[i][j] == 1:
                 cell_perimeter = perimeter_cell(grid, i, j)
+                # print(i, j, cell_perimeter)
                 grid_perimeter += cell_perimeter
     return grid_perimeter
