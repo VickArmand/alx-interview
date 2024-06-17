@@ -28,4 +28,6 @@ def makeChange(coins, total):
             min_coins += 1
         else:
             coins.remove(max_denomination)
+    if min_coins == 0:
+        return -1
     return min_coins
