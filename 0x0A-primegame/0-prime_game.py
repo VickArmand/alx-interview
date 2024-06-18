@@ -13,6 +13,18 @@ determine who the winner of each game is.
 """
 
 
+def isPrime(num):
+    """confirms if a number is prime or not"""
+    if num == 0 or num == 1:
+        return False
+    prime = True
+    for i in range(2, num):
+        if num % i == 0:
+            prime = False
+            break
+    return prime
+
+
 def isWinner(x, nums):
     """
     where x is the number of rounds and nums is an array of n
@@ -38,4 +50,32 @@ def isWinner(x, nums):
 
     Ben wins because there are no prime numbers for Maria to choose
     """
-    pass
+    players = ['Maria', 'Ben']
+    wins = {'Maria': 0, 'Ben': 0}
+    for i in range(x):
+        for element in nums:
+            l = [*range(1, element + 1)]
+            for player in players:
+                prime = None
+                for num in l:
+                    iP = isPrime(num)
+                    print(num,iP)
+                    if iP:
+                        print(player,'old',l)
+                        prime = num
+                        l.remove(num)
+                        for elem in l:
+                            print(elem, prime)
+                            if elem > prime and elem % prime == 0:
+                                l.remove(elem)
+                        print(player, 'new_l',l)
+                        wins[player] += 1
+                        continue
+    print(wins)
+    max = 0
+    winner = None
+    for player in players:
+        if wins[player] > max:
+            max = wins[player]
+            winner = player
+    return winner
