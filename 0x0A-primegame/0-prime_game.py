@@ -66,24 +66,21 @@ def isWinner(x, nums):
         element = nums[round]
         numList = [*range(1, element + 1)]
         relevant_list = numList.copy()
-        for j in range(2):
-            change_player = False
-            scores[1-j] = 1
-            scores[j] = 0
-            if relevant_list != [1] or not change_player:
-                for num in numList:
-                    iP = isPrime(num)
-                    if iP and num in relevant_list:
-                        remove_multiples(relevant_list, num)
-                        scores[j] = 1
-                        scores[1 - j] = 0
-                        change_player = True
-                        break
+        player_index = 0
+        for num in numList:
+            iP = isPrime(num)
+            if iP and num in relevant_list:
+                remove_multiples(relevant_list, num)
+                scores[player_index] = 1
+                scores[1 - player_index] = 0
+                player_index = 1 - player_index
+            else:
+                scores[1-player_index] = 1
+                scores[player_index] = 0
         numList.clear()
         relevant_list.clear()
         round_wins['Maria'] += scores[0]
         round_wins['Ben'] += scores[1]
-    # print(round_wins)
     max = round_wins['Maria']
     winner = None
     if round_wins['Ben'] == max:
