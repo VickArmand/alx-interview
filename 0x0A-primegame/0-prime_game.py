@@ -60,24 +60,36 @@ def isWinner(x, nums):
     Ben wins because there are no prime numbers for Maria to choose
     """
     players = ['Maria', 'Ben']
-    wins = {'Maria': 0, 'Ben': 0}
+    scores = [0, 0]
+    round_wins = {'Maria': 0, 'Ben': 0}
     for round in range(x):
         element = nums[round]
         numList = [*range(1, element + 1)]
+        relevant_list = numList.copy()
         for j in range(2):
-            for num in numList:
-                iP = isPrime(num)
-                if iP:
-                    # print(round, num, element, players[j], 'old_l', numList)
-                    remove_multiples(numList, num)
-                    wins[players[j]] = 1
-                    wins[players[1-j]] = 0
-            # print(round, num, element, players[j], 'new_l', numList)
-    # print(wins)
-    max = 0
+            change_player = False
+            scores[1-j] = 1
+            scores[j] = 0
+            if relevant_list != [1] or not change_player:
+                for num in numList:
+                    iP = isPrime(num)
+                    if iP and num in relevant_list:
+                        remove_multiples(relevant_list, num)
+                        scores[j] = 1
+                        scores[1 - j] = 0
+                        change_player = True
+                        break
+        numList.clear()
+        relevant_list.clear()
+        round_wins['Maria'] += scores[0]
+        round_wins['Ben'] += scores[1]
+    print(round_wins)
+    max = round_wins['Maria']
     winner = None
-    for player in players:
-        if wins[player] > max:
-            max = wins[player]
-            winner = player
+    if round_wins['Ben'] == max:
+        return winner
+    if round_wins['Ben'] > max:
+        winner = 'Ben'
+    else:
+        winner = 'Maria'
     return winner
