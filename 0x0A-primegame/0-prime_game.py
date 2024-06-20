@@ -83,7 +83,7 @@ def isWinner(x, nums):
         relevant_list.clear()
         round_wins['Maria'] += scores[0]
         round_wins['Ben'] += scores[1]
-    print(round_wins)
+    # print(round_wins)
     max = round_wins['Maria']
     winner = None
     if round_wins['Ben'] == max:
