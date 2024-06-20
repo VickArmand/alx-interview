@@ -25,6 +25,15 @@ def isPrime(num):
     return prime
 
 
+def remove_multiples(numList, num):
+    """
+    Removes multiples of a num in a list
+    """
+    for elem in numList:
+        if elem > 1 and elem % num == 0:
+            numList.remove(elem)
+
+
 def isWinner(x, nums):
     """
     where x is the number of rounds and nums is an array of n
@@ -52,26 +61,19 @@ def isWinner(x, nums):
     """
     players = ['Maria', 'Ben']
     wins = {'Maria': 0, 'Ben': 0}
-    for i in range(x):
-        for element in nums:
-            l = [*range(1, element + 1)]
-            for player in players:
-                prime = None
-                for num in l:
-                    iP = isPrime(num)
-                    print(num,iP)
-                    if iP:
-                        print(player,'old',l)
-                        prime = num
-                        l.remove(num)
-                        for elem in l:
-                            print(elem, prime)
-                            if elem > prime and elem % prime == 0:
-                                l.remove(elem)
-                        print(player, 'new_l',l)
-                        wins[player] += 1
-                        continue
-    print(wins)
+    for round in range(x):
+        element = nums[round]
+        numList = [*range(1, element + 1)]
+        for j in range(2):
+            for num in numList:
+                iP = isPrime(num)
+                if iP:
+                    # print(round, num, element, players[j], 'old_l', numList)
+                    remove_multiples(numList, num)
+                    wins[players[j]] = 1
+                    wins[players[1-j]] = 0
+            # print(round, num, element, players[j], 'new_l', numList)
+    # print(wins)
     max = 0
     winner = None
     for player in players:
