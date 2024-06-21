@@ -34,6 +34,17 @@ def remove_multiples(numList, num):
             numList.remove(elem)
 
 
+def num_of_primes(min, num):
+    """finds the number of prime numbers in a range"""
+    primes = 0
+    if num == 0:
+        return primes
+    for i in range(min, num + 1):
+        if isPrime(i):
+            primes += 1
+    return primes
+
+
 def isWinner(x, nums):
     """
     where x is the number of rounds and nums is an array of n
@@ -59,33 +70,31 @@ def isWinner(x, nums):
 
     Ben wins because there are no prime numbers for Maria to choose
     """
-    players = ['Maria', 'Ben']
-    scores = [0, 0]
-    round_wins = {'Maria': 0, 'Ben': 0}
+    nums.sort()
+    scores = {'Maria': 0, 'Ben': 0}
+    primes = 0
     for round in range(x):
         element = nums[round]
-        numList = [*range(1, element + 1)]
-        relevant_list = numList.copy()
-        player_index = 0
-        for num in numList:
-            iP = isPrime(num)
-            if iP and num in relevant_list:
-                remove_multiples(relevant_list, num)
-                scores[player_index] = 1
-                scores[1 - player_index] = 0
-                player_index = 1 - player_index
+        if round == 0:
+            primes = num_of_primes(1, element)
+        else:
+            prev = nums[round - 1]
+            if (element - prev == 1):
+                if isPrime(element):
+                    primes += 1
             else:
-                scores[1-player_index] = 1
-                scores[player_index] = 0
-        numList.clear()
-        relevant_list.clear()
-        round_wins['Maria'] += scores[0]
-        round_wins['Ben'] += scores[1]
-    max = round_wins['Maria']
+                primes += num_of_primes(prev + 1, element)
+        # print(f'primes in {element} is {primes}')
+        if primes % 2 == 0:
+            scores['Ben'] += 1
+        else:
+            scores['Maria'] += 1
+    # print(scores)
+    max = scores['Maria']
     winner = None
-    if round_wins['Ben'] == max:
+    if scores['Ben'] == max:
         return winner
-    if round_wins['Ben'] > max:
+    if scores['Ben'] > max:
         winner = 'Ben'
     else:
         winner = 'Maria'
