@@ -25,15 +25,6 @@ def isPrime(num):
     return prime
 
 
-def remove_multiples(numList, num):
-    """
-    Removes multiples of a num in a list
-    """
-    for elem in numList:
-        if elem > 1 and elem % num == 0:
-            numList.remove(elem)
-
-
 def num_of_primes(min, num):
     """finds the number of prime numbers in a range"""
     primes = 0
